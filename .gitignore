@@ -1,0 +1,19 @@
+# --- Credenciales y Entornos ---
+.env
+venv/
+env/
+ENV/
+
+# --- Datos (Rutas correctas para src/data/) ---
+src/data/raw/
+src/data/processed/
+
+# --- Python y Jupyter Notebooks ---
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# --- Archivos del Sistema Operativo ---
+.DS_Store
+Thumbs.db
