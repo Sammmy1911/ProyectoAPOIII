@@ -1,0 +1,13 @@
+kaggle
+python-dotenv
+opencv-python
+Pillow
+numpy
+pandas
+matplotlib
+scikit-learn
+xgboost
+joblib
+jupyter
+streamlit
+# Deep learning: pendiente (PyTorch o TensorFlow/Keras)
