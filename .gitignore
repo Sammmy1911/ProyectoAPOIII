@@ -1,0 +1,21 @@
+# --- Credenciales y entornos ---
+.env
+.venv/
+venv/
+env/
+
+# --- Datos (las imágenes se comparten por Drive, no por git) ---
+src/data/raw/
+src/data/processed/
+
+# --- Modelos pesados ---
+models_saved/
+
+# --- Python y Jupyter ---
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# --- Sistema operativo ---
+.DS_Store
+Thumbs.db
