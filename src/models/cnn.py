@@ -1,4 +1,3 @@
-"""CNN model builder for fruit quality classification."""
 from tensorflow.keras import Input, layers, models, optimizers
 
 
@@ -11,23 +10,9 @@ def build_cnn_model(
     learning_rate=1e-3,
     augment=True,
 ):
-    """
-    Construye una CNN configurable para clasificación de calidad de frutas.
 
-    Args:
-        input_shape: (alto, ancho, 3). Debe coincidir con CNN_IMG_SIZE de config.py (224,224).
-        num_classes: 3 (Bad, Regular, Good).
-        filters: tupla de filtros por bloque convolucional.
-        dense_units: unidades en la capa densa antes de salida.
-        dropout: tasa de dropout.
-        learning_rate: learning rate del optimizador Adam.
-        augment: si True, añade capas de data augmentation (solo train).
-
-    Returns:
-        Modelo Keras compilado.
-    """
     inputs = Input(shape=input_shape)
-    x = layers.Rescaling(1.0 / 255)(inputs)  # normalización interna [0,1]
+    x = layers.Rescaling(1.0 / 255)(inputs) 
 
     if augment:  # solo se activan durante entrenamiento
         x = layers.RandomFlip("horizontal")(x)
