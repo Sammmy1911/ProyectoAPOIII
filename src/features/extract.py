@@ -18,8 +18,8 @@ from skimage.feature import local_binary_pattern
 from src.features.segmentation import segment_fruit
 
 # ----------------------------------------------------------------------------- color
-HSV_BINS = 16            # cajones por canal: pocos = robusto, muchos = más detalle
-# Rangos de OpenCV: H en [0, 180), S y V en [0, 256)
+HSV_BINS = 16           
+# estos son Rangos de OpenCV: H en [0, 180), S y V en [0, 256)
 HSV_RANGES = {"h": 180, "s": 256, "v": 256}
 
 
@@ -49,12 +49,12 @@ def color_features(img_bgr, mask, bins=HSV_BINS):
 
 # --------------------------------------------------------------------------- textura
 LBP_POINTS = 8           # vecinos que se comparan con cada píxel
-LBP_RADIUS = 1           # distancia de esos vecinos
+LBP_RADIUS = 1           # y la distancia de esos vecinos
 
 
 def texture_features(img_bgr, mask, points=LBP_POINTS, radius=LBP_RADIUS):
     """
-    LBP (Local Binary Patterns, Ojala et al., 2002): cada píxel se compara con sus
+    LBP (Local Binary Patterns cada píxel se compara con sus
     vecinos y se codifica si son más claros o más oscuros. El histograma de esos
     códigos describe la textura: piel lisa vs. rugosa, con moho, arrugada.
     Con method='uniform' hay points + 2 códigos posibles -> 10 números.
@@ -106,7 +106,7 @@ def shape_features(mask):
 
 
 # ------------------------------------------------------------------------ todo junto
-IMG_SIZE = (224, 224)    # mismo tamaño que usa preprocess.ipynb para todo el dataset
+IMG_SIZE = (224, 224)    # lo tome del mismo tamaño que usa preprocess.ipynb para todo el dataset
 
 
 def extract_features(img_bgr, mask=None, include_shape=True, size=IMG_SIZE):

@@ -19,7 +19,7 @@ import cv2
 import numpy as np
 
 MAX_SIDE = 512          # se trabaja a esta resolución por velocidad
-LOW_SATURATION = 45     # S (0-255) por debajo de esto se considera "gris" -> fondo probable
+LOW_SATURATION = 45     # S (0-255) por debajo de esto se considera gris lo que significa que es probablemente un fondo
 
 
 def _resize(img, max_side=MAX_SIDE):
@@ -83,7 +83,7 @@ def segment_fruit(img_bgr, iterations=5, margin=0.08):
         mask = np.zeros((h, w), np.uint8)
         cv2.ellipse(mask, center, axes, 0, 0, 360, 255, -1)
 
-    # Limpieza morfológica
+    # Limpieza de la máscara para eliminar huecos y regiones pequeñas
     k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
     mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, k)
     mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, k)
