@@ -1,0 +1,51 @@
+archivo,nombre_original,fruta,calidad,tamano,peso_g,defecto,lugar,fecha
+apple_good_small_001.jpg,manzana peq buena 1.jpg,apple,good,small,,,,2026-11-23
+apple_regular_medium_002.jpg,manzana mediana reg 2.jpg,apple,regular,medium,,,,2026-11-23
+apple_good_small_003.jpg,manzana peq buena 3.jpg,apple,good,small,,,,2026-11-23
+apple_regular_medium_004.jpg,manzana med reg 4.jpg,apple,regular,medium,,,,2026-11-23
+apple_regular_medium_005.jpg,manzana reg med 5 mancha.jpg,apple,regular,medium,,mancha,,2026-11-23
+apple_regular_medium_006.jpg,manza med reg 6 hueco.jpg,apple,regular,medium,,hueco,,2026-11-23
+apple_good_medium_007.jpg,man buena medi 7.jpg,apple,good,medium,,,,2026-11-23
+apple_good_small_008.jpg,manza peq buena 8.jpg,apple,good,small,,,,2026-11-23
+apple_good_medium_009.jpg,mazn med buena 9.jpg,apple,good,medium,,,,2026-11-23
+apple_good_small_010.jpg,mazn pe buena 10.jpg,apple,good,small,,,,2026-11-23
+apple_regular_medium_011.jpg,manza reg med macha oscura 11.jpg,apple,regular,medium,,mancha oscura,,2026-11-23
+apple_regular_medium_012.jpg,manz med reg huequitos 12.jpg,apple,regular,medium,,huequitos,,2026-11-23
+apple_regular_large_013.jpg,manz  grand reg rayoncitos 13.jpg,apple,regular,large,,rayoncitos,,2026-11-23
+apple_regular_large_014.jpg,mazn reg hueco grand 14.jpg,apple,regular,large,,hueco,,2026-11-23
+orange_good_medium_015.jpg,naranja buena medi 15.jpg,orange,good,medium,,,,2026-11-23
+banana_regular_medium_016.jpg,banano med reg manchas 16.jpg,banana,regular,medium,,manchas,,2026-11-23
+banana_regular_medium_017.jpg,bana reg med manchas 17.jpg,banana,regular,medium,,manchas,,2026-11-23
+banana_bad_small_018.jpg,ban peq malo mancha 18.jpg,banana,bad,small,,mancha,,2026-11-23
+banana_good_large_019.jpg,ban grande bueno 19.jpg,banana,good,large,,,,2026-11-23
+banana_bad_small_020.jpg,ban malo peq golpe 20.jpg,banana,bad,small,,golpe,,2026-11-23
+banana_bad_small_021.jpg,ban malo peq manchas 21.jpg,banana,bad,small,,manchas,,2026-11-23
+orange_good_large_022.jpg,nar grande buena 22.jpg,orange,good,large,,,,2026-11-23
+banana_bad_small_023.jpg,ban malo peq manchas 23.jpg,banana,bad,small,,manchas,,2026-11-23
+banana_bad_medium_024.jpg,ban malo med golpe 24.jpg,banana,bad,medium,,golpe,,2026-11-23
+orange_regular_medium_025.jpg,nar reg medi huequito 25.jpg,orange,regular,medium,,huequito,,2026-11-23
+orange_good_medium_026.jpg,nara buena med 26.jpg,orange,good,medium,,,,2026-11-23
+orange_bad_medium_027.jpg,nar mala hongo mediana 27.jpg,orange,bad,medium,,hongo,,2026-11-23
+orange_good_large_028.jpg,nar grande buena 28.jpg,orange,good,large,,,,2026-11-23
+orange_good_large_029.jpg,nar grande buena 29.jpg,orange,good,large,,,,2026-11-23
+orange_bad_large_030.jpg,nar grande manchas mala 30.jpg,orange,bad,large,,manchas,,2026-11-23
+orange_regular_large_031.jpg,nar reg macnahss grande 31.jpg,orange,regular,large,,manchas,,2026-11-23
+orange_good_large_032.jpg,nar gradne buena 32.jpg,orange,good,large,,,,2026-11-23
+orange_bad_medium_033.jpg,nar mediana mala hongo 33.jpg,orange,bad,medium,,hongo,,2026-11-23
+orange_bad_large_034.jpg,nar mala hongo grande 34.jpg,orange,bad,large,,hongo,,2026-11-23
+orange_good_large_035.jpg,nar buena grande 35.jpg,orange,good,large,,,,2026-11-23
+orange_bad_large_036.jpg,nar mala hongo grande 36.jpg,orange,bad,large,,hongo,,2026-11-23
+apple_bad_medium_038.jpeg,apple_bad_medium_038.jpeg,apple,bad,medium,,,,
+apple_bad_medium_040.jpeg,apple_bad_medium_040.jpeg,apple,bad,medium,,,,
+apple_bad_small_037.jpeg,apple_bad_small_037.jpeg,apple,bad,small,,,,
+apple_bad_small_039.jpeg,apple_bad_small_039.jpeg,apple,bad,small,,,,
+banana_good_medium_043.jpg,banana_good_medium_043.jpg,banana,good,medium,,,,
+banana_good_medium_044.png,banana_good_medium_044.png,banana,good,medium,,,,
+banana_good_small_041.jpg,banana_good_small_041.jpg,banana,good,small,,,,
+banana_good_small_042.jpg,banana_good_small_042.jpg,banana,good,small,,,,
+banana_regular_small_048.jpeg,banana_regular_small_048.jpeg,banana,regular,small,,,,
+banana_regular_small_049.jpg,banana_regular_small_049.jpg,banana,regular,small,,,,
+banana_regular_small_050.jpeg,banana_regular_small_050.jpeg,banana,regular,small,,,,
+orange_regular_medium_045.jpg,orange_regular_medium_045.jpg,orange,regular,medium,,,,
+orange_regular_medium_046.jpg,orange_regular_medium_046.jpg,orange,regular,medium,,,,
+orange_regular_small_047.jpg,orange_regular_small_047.jpg,orange,regular,small,,,,

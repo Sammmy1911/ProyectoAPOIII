@@ -1,5 +1,5 @@
 {
-  "source_mode": "onedrive_plus_kaggle",
+  "source_mode": "kaggle_plus_onedrive_plus_own",
   "classes": [
     "Bad Quality_Fruits",
     "Regular Quality_Fruits",
@@ -16,14 +16,14 @@
     "2": "Good Quality_Fruits"
   },
   "class_weight_by_idx": {
-    "0": 1.0328266835549926,
-    "1": 2.020859149111937,
-    "2": 0.6506416650043221
+    "0": 1.0329148644371768,
+    "1": 2.0193874394142517,
+    "2": 0.6507593632647636
   },
   "class_weight_by_class": {
-    "Bad Quality_Fruits": 1.0328266835549926,
-    "Regular Quality_Fruits": 2.020859149111937,
-    "Good Quality_Fruits": 0.6506416650043221
+    "Bad Quality_Fruits": 1.0329148644371768,
+    "Regular Quality_Fruits": 2.0193874394142517,
+    "Good Quality_Fruits": 0.6507593632647636
   },
   "image_size": [
     224,
@@ -37,13 +37,35 @@
   },
   "augmentations_per_train_image": 2,
   "split_counts": {
-    "train": 58710,
-    "val": 4194,
-    "test": 4194
+    "train": 58746,
+    "val": 4202,
+    "test": 4200
   },
   "augmented_counts_by_split": {
     "train": 39140,
     "val": 0,
     "test": 0
+  },
+  "source_counts_by_split": {
+    "train": {
+      "kaggle": 38796,
+      "local_apo3": 19914,
+      "own": 36
+    },
+    "val": {
+      "kaggle": 2745,
+      "local_apo3": 1449,
+      "own": 8
+    },
+    "test": {
+      "kaggle": 2775,
+      "local_apo3": 1419,
+      "own": 6
+    }
+  },
+  "own_photo_counts_by_split": {
+    "train": 36,
+    "val": 8,
+    "test": 6
   }
 }

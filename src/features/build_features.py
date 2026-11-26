@@ -4,7 +4,7 @@ Extracción masiva de características para todo el dataset.
 Recorre las imágenes ORIGINALES (sin aumentos) de:
     - Kaggle:   src/data/raw/kaggle/{Bad,Good} Quality_Fruits/<Fruta>_<Calidad>/*.jpg   (Mixed se ignora)
     - OneDrive: src/data/raw/OneDrive_2026-11-23/.../{Bad,Regular,Good} Quality_Fruits/<Fruta>_<Calidad>/*.jpg
-    - Propias:  src/data/raw/own/*.jpg   (fruta_calidad_tamaño_###.jpg)
+    - Propias:  src/data/raw/own/*.{jpg,jpeg,png,webp} (fruta_calidad_tamaño_###)
 
 y guarda UNA fila por imagen en src/data/processed/features_all.csv con:
     rel_path, source, class, label, fruit, <69 características>
@@ -64,7 +64,9 @@ def list_images():
                     fruit = p.parent.name.split("_")[0].lower() if p.parent != base / cls else "unknown"
                     rows.append(dict(rel_path=p.relative_to(RAW).as_posix(), source=source,
                                      **{"class": cls}, label=LABEL[cls], fruit=fruit))
-    for p in sorted((RAW / "own").glob("*.jpg")):
+    for p in sorted((RAW / "own").iterdir()):
+        if not p.is_file() or p.suffix.lower() not in EXT:
+            continue
         fruit, quality = p.stem.split("_")[:2]
         cls = OWN_QUALITY[quality]
         rows.append(dict(rel_path=p.relative_to(RAW).as_posix(), source="own",
