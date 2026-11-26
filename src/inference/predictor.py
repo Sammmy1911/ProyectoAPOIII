@@ -111,7 +111,7 @@ def preprocess(image: Image.Image, img_size=CNN_IMG_SIZE) -> np.ndarray:
 
     arr = np.asarray(image.convert("RGB"), dtype=np.uint8)
     alto, ancho = img_size
-    arr = cv2.resize(arr, (ancho, alto))  # cv2 recibe (ancho, alto)
+    arr = cv2.resize(arr, (ancho, alto), interpolation=cv2.INTER_AREA)  
     return np.expand_dims(arr.astype("float32"), axis=0)
 
 
