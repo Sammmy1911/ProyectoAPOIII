@@ -13,6 +13,7 @@ MODELS_DIR = ROOT / "models_saved"
 
 SEED = 42
 IMG_SIZE = (224, 224)
+CNN_IMG_SIZE = (224,224)
 
 # Orden ordinal: de peor a mejor calidad
 CLASSES = ["Bad", "Regular", "Good"]
