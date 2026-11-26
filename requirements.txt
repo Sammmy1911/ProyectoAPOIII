@@ -1,5 +1,15 @@
-kaggle
+tensorflow
+streamlit
+pillow
 opencv-python
+numpy
 pandas
-jupyter
+scikit-learn
+scikit-image
+joblib
 matplotlib
+seaborn
+kaggle
+python-dotenv
+jupyter
+ipykernel

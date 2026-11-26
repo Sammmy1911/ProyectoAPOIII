@@ -17,3 +17,12 @@ __pycache__/
 # --- Archivos del Sistema Operativo ---
 .DS_Store
 Thumbs.db
+
+# Modelos y resultados
+models_saved/
+results/
+src/data/processed/
+*.keras
+.venv/
+.venv311/
+.python-version
