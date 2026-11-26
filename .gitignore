@@ -13,10 +13,8 @@ kaggle.json
 # Evita subir miles de imágenes de OneDrive, Kaggle, procesadas o aumentadas a Git
 data/raw/
 data/processed/
-data/splits/
 src/data/raw/
 src/data/processed/
-src/data/splits/
 *.jpg
 *.jpeg
 *.png
