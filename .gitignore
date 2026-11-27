@@ -1,5 +1,5 @@
 # ==============================================================================
-# 1. CREDENCIALES, SECRETO Y CONFIGURACIÓN LOCAL
+# 1. CREDENCIALES, SECRETOS Y CONFIGURACIÓN LOCAL
 # ==============================================================================
 .env
 .env.*
@@ -46,6 +46,7 @@ weights/
 runs/
 wandb/
 mlruns/
+models_saved/
 
 # ==============================================================================
 # 4. PYTHON, ENTORNOS VIRTUALES Y CACHÉS
