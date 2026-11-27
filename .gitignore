@@ -29,7 +29,7 @@ src/data/processed/
 # !src/data/processed/dataset_index.csv
 
 # ==============================================================================
-# 3. MODELOS ENTRENADOS, CHECKPOINTS Y ARTEFACTOS PESADOS
+# 3. MODELOS ENTRENADOS, CHECKPOINTS, RESULTADOS Y ARTEFACTOS PESADOS
 # ==============================================================================
 *.h5
 *.keras
@@ -43,6 +43,8 @@ src/data/processed/
 *.pickle
 checkpoints/
 weights/
+models_saved/
+results/
 runs/
 wandb/
 mlruns/
@@ -73,10 +75,12 @@ wheels/
 *.egg
 
 .venv/
+.venv311/
 venv/
 ENV/
 env/
 .conda/
+.python-version
 
 .pytest_cache/
 .ruff_cache/

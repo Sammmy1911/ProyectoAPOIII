@@ -14,17 +14,21 @@ y recibe siempre un diccionario con esta forma:
         "tamaño": "mediano" | None,         # None = aun no hay modelo de tamano
         "modelo": "CNN",
         "es_mock": False,
+        "latencia_ms": 12.3,                # opcional, tiempo de inferencia
     }
 
-Si existe models_saved/cnn_best.keras se usa la CNN real; si no, un mock
-determinista para poder desarrollar y demostrar la interfaz sin modelo.
+Si existe models_saved/cnn_best.keras se usa la CNN real;
+si no, se intenta modelo clásico (model.joblib + scaler.joblib + encoder.joblib);
+si no, un mock determinista para poder desarrollar y demostrar la interfaz sin modelo.
 Las imagenes se procesan en memoria: este modulo nunca escribe a disco.
 """
 from __future__ import annotations
 
 import hashlib
 import io
+import time
 from pathlib import Path
+from typing import TypedDict, NotRequired
 
 import numpy as np
 from PIL import Image, ImageOps, UnidentifiedImageError
@@ -39,6 +43,19 @@ SIZES = ["pequeño", "mediano", "grande"]
 
 class ImageError(ValueError):
     """Error de entrada con un mensaje listo para mostrar al usuario."""
+
+
+# --------------------------------------------------------------------------
+# Contrato tipado
+# --------------------------------------------------------------------------
+class PredictResult(TypedDict):
+    calidad: str
+    probabilidad: float
+    probabilidades: dict[str, float]
+    tamaño: str | None
+    modelo: str
+    es_mock: bool
+    latencia_ms: NotRequired[float]
 
 
 # --------------------------------------------------------------------------
@@ -90,18 +107,24 @@ def preprocess(image: Image.Image, img_size=CNN_IMG_SIZE) -> np.ndarray:
     El redimensionado usa cv2.resize (sin conservar proporcion), igual que el
     preprocesamiento del dataset, para que entrenamiento e inferencia coincidan.
     """
-    import cv2
+    import cv2  # import perezoso
 
     arr = np.asarray(image.convert("RGB"), dtype=np.uint8)
     alto, ancho = img_size
-    arr = cv2.resize(arr, (ancho, alto))  # cv2 recibe (ancho, alto)
+    arr = cv2.resize(arr, (ancho, alto), interpolation=cv2.INTER_AREA)
     return np.expand_dims(arr.astype("float32"), axis=0)
 
 
-def _resultado(proba, tamaño, modelo: str, es_mock: bool) -> dict:
+def _resultado(
+    proba: np.ndarray,
+    tamaño: str | None,
+    modelo: str,
+    es_mock: bool,
+    latencia_ms: float | None = None,
+) -> PredictResult:
     proba = np.asarray(proba, dtype=float)
     i = int(proba.argmax())
-    return {
+    result: PredictResult = {
         "calidad": CLASSES[i],
         "probabilidad": float(proba[i]),
         "probabilidades": {c: float(p) for c, p in zip(CLASSES, proba)},
@@ -109,6 +132,9 @@ def _resultado(proba, tamaño, modelo: str, es_mock: bool) -> dict:
         "modelo": modelo,
         "es_mock": es_mock,
     }
+    if latencia_ms is not None:
+        result["latencia_ms"] = latencia_ms
+    return result
 
 
 # --------------------------------------------------------------------------
@@ -121,11 +147,13 @@ class MockPredictor:
     es_mock = True
     motivo = "Aún no hay un modelo entrenado en models_saved/."
 
-    def predict(self, image: Image.Image) -> dict:
+    def predict(self, image: Image.Image) -> PredictResult:
+        t0 = time.perf_counter()
         semilla = int(hashlib.md5(image.tobytes()).hexdigest(), 16) % (2**32)
         rng = np.random.default_rng(semilla)
         proba = rng.dirichlet(np.ones(len(CLASSES)))
-        return _resultado(proba, str(rng.choice(SIZES)), "Demostración", True)
+        latencia_ms = (time.perf_counter() - t0) * 1000
+        return _resultado(proba, str(rng.choice(SIZES)), "Demostración", True, latencia_ms)
 
 
 class KerasPredictor:
@@ -138,19 +166,107 @@ class KerasPredictor:
 
         self.model = tf.keras.models.load_model(model_path, compile=False)
 
-    def predict(self, image: Image.Image) -> dict:
+    def predict(self, image: Image.Image) -> PredictResult:
+        t0 = time.perf_counter()
         proba = self.model.predict(preprocess(image), verbose=0)[0]
-        # tamano: lo aportara el modulo de caracteristicas; None = pendiente
-        return _resultado(proba, None, "CNN", False)
+        latencia_ms = (time.perf_counter() - t0) * 1000
+        # tamaño: lo aportará el modulo de caracteristicas; None = pendiente
+        return _resultado(proba, None, "CNN", False, latencia_ms)
+
+
+class SklearnPredictor:
+    """Predictor para modelo clásico (joblib + scaler + encoder)."""
+
+    nombre = "Clásico"
+    es_mock = False
+    motivo = ""
+
+    def __init__(self, model_dir: Path = MODELS_DIR):
+        self.model_dir = model_dir
+        self._model = None
+        self._scaler = None
+        self._encoder = None
+
+    def _load_artifacts(self):
+        """Cargar model.joblib, scaler.joblib, encoder.joblib desde model_dir."""
+        import joblib  # import perezoso
+
+        model_path = self.model_dir / "model.joblib"
+        scaler_path = self.model_dir / "scaler.joblib"
+        encoder_path = self.model_dir / "encoder.joblib"
+
+        if not (model_path.exists() and scaler_path.exists() and encoder_path.exists()):
+            raise FileNotFoundError(
+                f"Artefactos del modelo clásico no encontrados en {self.model_dir}"
+            )
+
+        self._model = joblib.load(model_path)
+        self._scaler = joblib.load(scaler_path)
+        self._encoder = joblib.load(encoder_path)
+
+    def predict(self, image: Image.Image) -> PredictResult:
+        import time
+
+        t0 = time.perf_counter()
+        # 1. PIL RGB -> cv2 BGR
+        import cv2  # import perezoso
+
+        img_bgr = cv2.cvtColor(np.asarray(image.convert("RGB")), cv2.COLOR_RGB2BGR)
+
+        # 2. extract_features(img_bgr) -> vector
+        # 3. scaler.transform([vector])
+        # 4. model.predict_proba -> proba
+        # 5. encoder.inverse_transform para mapear a CLASSES
+        # 6. _resultado(proba, None, "Clásico", False, latencia_ms)
+        raise NotImplementedError("Artefactos modelo clásico no disponibles aún")
+
+
+class SizePredictor:
+    """Predictor de tamaño basado en umbrales calibrados."""
+
+    def __init__(
+        self, thresholds_path: Path = Path(__file__).parent.parent / "features" / "size_thresholds.json"
+    ):
+        self.thresholds_path = thresholds_path
+
+    def predict_size(self, image: Image.Image, fruit_hint: str | None = None) -> dict:
+        # 1. PIL -> cv2 BGR
+        # 2. segment_fruit(img_bgr) -> mask
+        # 3. shape_features(mask) -> diameter_norm
+        # 4. estimate_size(diameter_norm, fruit_hint or "all", thresholds)
+        # 5. devuelve {"size": "small|medium|large", "diameter_norm": float, ...}
+        raise NotImplementedError("Umbrales de tamaño no calibrados aún")
 
 
 def get_predictor():
-    """CNN real si existe el archivo del modelo; si no (o si falla), mock."""
+    """Cadena de prioridad:
+    1. CNN real (cnn_best.keras existe + TF carga)
+    2. Clásico real (model.joblib + scaler.joblib + encoder.joblib existen)
+    3. Mock (fallback)
+    Cada predictor tiene .motivo explicativo si falla.
+    """
+    # 1. CNN
     if CNN_MODEL_PATH.exists():
         try:
             return KerasPredictor(CNN_MODEL_PATH)
         except Exception as exc:  # TF ausente, version incompatible, archivo danado
-            mock = MockPredictor()
-            mock.motivo = f"No se pudo cargar la CNN ({type(exc).__name__})."
-            return mock
+            predictor = MockPredictor()
+            predictor.motivo = f"No se pudo cargar la CNN ({type(exc).__name__})."
+            return predictor
+
+    # 2. Modelo clásico (sklearn)
+    classic_model = MODELS_DIR / "model.joblib"
+    classic_scaler = MODELS_DIR / "scaler.joblib"
+    classic_encoder = MODELS_DIR / "encoder.joblib"
+    if classic_model.exists() and classic_scaler.exists() and classic_encoder.exists():
+        try:
+            predictor = SklearnPredictor(MODELS_DIR)
+            predictor._load_artifacts()
+            return predictor
+        except Exception as exc:
+            predictor = MockPredictor()
+            predictor.motivo = f"No se pudo cargar el modelo clásico ({type(exc).__name__})."
+            return predictor
+
+    # 3. Mock
     return MockPredictor()

@@ -16,9 +16,6 @@ IMG_SIZE = (224, 224)
 CNN_IMG_SIZE = (224,224)
 
 # Orden ordinal: de peor a mejor calidad
-CLASSES = ["Bad", "Regular", "Good"]
-CLASS_FOLDERS = {
-    "Bad": "Bad Quality_Fruits",
-    "Regular": "Regular Quality_Fruits",
-    "Good": "Good Quality_Fruits",
-}
+CLASSES = ["Bad Quality_Fruits", "Regular Quality_Fruits", "Good Quality_Fruits"]
+CLASS_FOLDERS = {c: c for c in CLASSES}
+# Resultado: {"Bad Quality_Fruits": "Bad Quality_Fruits", "Regular Quality_Fruits": "Regular Quality_Fruits", "Good Quality_Fruits": "Good Quality_Fruits"}

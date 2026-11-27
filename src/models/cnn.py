@@ -9,6 +9,7 @@ def build_cnn_model(
     dropout=0.5,
     learning_rate=1e-3,
     augment=True,
+    use_gap=False,
 ):
 
     inputs = Input(shape=input_shape)
@@ -24,8 +25,12 @@ def build_cnn_model(
         x = layers.BatchNormalization()(x)
         x = layers.MaxPooling2D((2, 2))(x)
 
-    x = layers.Flatten()(x)
-    x = layers.Dense(dense_units, activation="relu")(x)
+    if use_gap:
+        x = layers.GlobalAveragePooling2D()(x)
+        x = layers.Dense(dense_units, activation="relu")(x)
+    else:
+        x = layers.Flatten()(x)
+        x = layers.Dense(dense_units, activation="relu")(x)
     x = layers.Dropout(dropout)(x)
     outputs = layers.Dense(num_classes, activation="softmax")(x)
 
