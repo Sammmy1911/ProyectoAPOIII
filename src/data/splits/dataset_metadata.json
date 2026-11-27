@@ -1,0 +1,49 @@
+{
+  "source_mode": "onedrive_plus_kaggle",
+  "classes": [
+    "Bad Quality_Fruits",
+    "Regular Quality_Fruits",
+    "Good Quality_Fruits"
+  ],
+  "label_to_idx": {
+    "Bad Quality_Fruits": 0,
+    "Regular Quality_Fruits": 1,
+    "Good Quality_Fruits": 2
+  },
+  "idx_to_label": {
+    "0": "Bad Quality_Fruits",
+    "1": "Regular Quality_Fruits",
+    "2": "Good Quality_Fruits"
+  },
+  "class_weight_by_idx": {
+    "0": 1.0328266835549926,
+    "1": 2.020859149111937,
+    "2": 0.6506416650043221
+  },
+  "class_weight_by_class": {
+    "Bad Quality_Fruits": 1.0328266835549926,
+    "Regular Quality_Fruits": 2.020859149111937,
+    "Good Quality_Fruits": 0.6506416650043221
+  },
+  "image_size": [
+    224,
+    224
+  ],
+  "random_seed": 42,
+  "split_ratio": {
+    "train": 0.7,
+    "val": 0.15,
+    "test": 0.15
+  },
+  "augmentations_per_train_image": 2,
+  "split_counts": {
+    "train": 58710,
+    "val": 4194,
+    "test": 4194
+  },
+  "augmented_counts_by_split": {
+    "train": 39140,
+    "val": 0,
+    "test": 0
+  }
+}

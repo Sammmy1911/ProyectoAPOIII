@@ -1,0 +1,108 @@
+# ==============================================================================
+# 1. CREDENCIALES, SECRETO Y CONFIGURACIÓN LOCAL
+# ==============================================================================
+.env
+.env.*
+!.env.example
+kaggle.json
+.kaggle/
+
+# ==============================================================================
+# 2. DATASETS PESADOS, IMÁGENES PROCESADAS Y SPLITS GENERADOS
+# ==============================================================================
+# Evita subir miles de imágenes de OneDrive, Kaggle, procesadas o aumentadas a Git
+data/raw/
+data/processed/
+src/data/raw/
+src/data/processed/
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.zip
+*.tar.gz
+
+# Si quieres versionar únicamente los CSV/JSON ligeros de metadatos y NO las imágenes,
+# descomenta las 3 líneas de abajo:
+# !src/data/splits/dataset_splits.csv
+# !src/data/splits/dataset_metadata.json
+# !src/data/processed/dataset_index.csv
+
+# ==============================================================================
+# 3. MODELOS ENTRENADOS, CHECKPOINTS Y ARTEFACTOS PESADOS
+# ==============================================================================
+*.h5
+*.keras
+*.pt
+*.pth
+*.onnx
+*.tflite
+*.pb
+*.joblib
+*.pkl
+*.pickle
+checkpoints/
+weights/
+runs/
+wandb/
+mlruns/
+
+# ==============================================================================
+# 4. PYTHON, ENTORNOS VIRTUALES Y CACHÉS
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+.venv/
+venv/
+ENV/
+env/
+.conda/
+
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# ==============================================================================
+# 5. JUPYTER Y GOOGLE COLAB
+# ==============================================================================
+.ipynb_checkpoints/
+drive/
+.content/
+
+# ==============================================================================
+# 6. SISTEMA OPERATIVO Y EDITORES (WINDOWS / LINUX / MACOS)
+# ==============================================================================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+.AppleDouble
+.LSOverride
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
