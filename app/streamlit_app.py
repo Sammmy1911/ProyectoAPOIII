@@ -65,6 +65,14 @@ st.markdown(
 )
 
 
+def ui(cls: str):
+    """Presentación de una clase; acepta 'Bad' o 'Bad Quality_Fruits'."""
+    return CLASS_UI[cls.split()[0].split("_")[0]]
+
+def ui(cls: str):
+    """Presentación de una clase; acepta 'Bad' o 'Bad Quality_Fruits'."""
+    return CLASS_UI[cls.split()[0].split("_")[0]]
+
 @st.cache_resource(show_spinner="Cargando modelo…")
 def load_predictor():
     return get_predictor()
@@ -73,7 +81,7 @@ def load_predictor():
 def prob_rows(probs: dict) -> str:
     filas = []
     for cls in CLASSES:
-        nombre, color, _ = CLASS_UI[cls]
+        nombre, color, _ = ui(cls)
         pct = probs.get(cls, 0.0) * 100
         filas.append(
             f'<div class="prow"><span class="plabel">{nombre}</span>'
@@ -84,7 +92,7 @@ def prob_rows(probs: dict) -> str:
 
 
 def verdict_html(res: dict) -> str:
-    nombre, color, pista = CLASS_UI[res["calidad"]]
+    nombre, color, pista = ui(res["calidad"])
     return (
         f'<div class="verdict" style="--grade:{color}">'
         f'<div class="verdict-label">Calidad estimada</div>'
